@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop Zone — Image Uploader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen">
+
+    <!-- Background -->
+    <div class="bg-atmosphere" aria-hidden="true">
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
+        <div class="bg-blob bg-blob-3"></div>
+    </div>
+    <div class="bg-dots" aria-hidden="true"></div>
+
+    <!-- Toasts -->
+    <div id="toastBox" class="fixed top-5 right-5 z-50 flex flex-col gap-3" aria-live="polite"></div>
+
+    <main class="relative z-10 max-w-3xl mx-auto px-5 py-10 md:py-14">
+
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+                Drop <span class="accent">Zone</span>
+            </h1>
+            <p class="text-sm md:text-base text-secondary">
+                Drag and drop your images — they persist locally across refreshes.
+            </p>
+        </header>
+
+        <!-- Upload area -->
+        <section class="mb-8" aria-label="File upload area">
+            <div id="dropZone" class="drop-zone flex items-center justify-center"
+                 style="min-height:270px" tabindex="0" role="button"
+                 aria-label="Drop files here or click to browse">
+                <!-- Default view -->
+                <div id="viewDefault" class="text-center relative z-10 px-6 py-10">
+                    <div class="upload-icon mb-5">
+                        <i class="fa-solid fa-cloud-arrow-up text-5xl upload-icon-color"></i>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Drop your images here</h2>
+                    <p class="text-sm mb-4 text-secondary">or click anywhere to browse your files</p>
+                    <span class="file-type-badge">
+                        JPG &middot; PNG &middot; GIF
+                    </span>
+                </div>
+                <!-- Uploading view -->
+                <div id="viewUploading" class="flex flex-col items-center gap-3 relative z-10 px-6 py-8" style="display:none">
+                    <img id="previewImg" class="preview-img" alt="Preview">
+                    <p id="previewName" class="text-sm font-medium"></p>
+                    <p id="previewSize" class="text-xs preview-size"></p>
+                </div>
+            </div>
+            <input type="file" id="fileInput"
+                   accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif"
+                   multiple hidden aria-hidden="true">
+
+            <!-- Progress -->
+            <div id="progressWrap" class="progress-wrap mt-4 flex items-center gap-3">
+                <div class="progress-track flex-1">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <span id="progressPct" class="progress-pct">0%</span>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section aria-label="Uploaded images gallery">
+            <div class="flex items-center justify-between mb-5">
+                <div class="flex items-center gap-3">
+                    <h2 class="text-lg font-semibold">Your Images</h2>
+                    <span id="imgCount" class="img-count">0</span>
+                </div>
+                <button id="clearBtn" class="clear-btn" style="display:none" aria-label="Clear all images">
+                    <i class="fa-solid fa-trash-can mr-1.5"></i>Clear All
+                </button>
+            </div>
+            <div id="gallery"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
